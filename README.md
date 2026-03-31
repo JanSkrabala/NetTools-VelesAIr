@@ -110,6 +110,7 @@ Key features:
 - **Automatic tunnel creation** where the control plane establishes required connectivity to agents and devices according to policy
 
 ![Unified Control Plane – Device Context](UCP.png)
+![Unified Control Plane – Commit Confirm](CommitConfirm.png)
 
 
 ### Visual Network Canvas
