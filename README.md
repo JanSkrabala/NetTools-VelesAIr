@@ -40,7 +40,10 @@ NetTools-VelesAI combines:
 - a visual network canvas for topology, dependency, and change-impact analysis
 - AI-assisted reasoning for configuration, validation, and troubleshooting
 - **upgrade with AI inline**—context, checks, and guidance in the same flow as firmware and lifecycle changes
+- **firmware and software upgrades** with scheduling, rollout planning, and vendor-aligned target versions
+- **configuration backups**—automated capture, retention, and restore-oriented exports before and after material changes
 - vulnerability and lifecycle awareness (CVEs, firmware versions, end-of-life status)
+- **compliance and security frameworks**—structured views that map posture and controls to common enterprise frameworks for audits and gap analysis
 - financial and operational context (CSV-based cost, inventory, and compliance data)
 
 The visual canvas is the primary interaction surface, linking devices, policies, VPNs, vulnerabilities, and costs into a coherent, continuously updated model. AI augments this model by providing context-aware explanations, risk assessment, and guided actions, while keeping humans firmly in control of every operational decision.
@@ -68,6 +71,7 @@ Business logic layer
 
 - Unified Control Plane
 - Policy & config services
+- Upgrade and backup orchestration
 - AI tool orchestration
 
 Data layer
@@ -101,6 +105,8 @@ Key features:
 - Configuration drift detection
 - Batch command execution and deployment optimization
 - Real-time monitoring and health checks
+- **Firmware and software upgrades**: plan targets, stage rollouts, track progress, and align with lifecycle policy
+- **Configuration backups**: scheduled snapshots, retention, and pre-change checkpoints tied to the configuration lifecycle
 - **Automatic tunnel creation** where the control plane establishes required connectivity to agents and devices according to policy
 
 ![Unified Control Plane – Device Context](UCP.png)
@@ -145,6 +151,7 @@ Features:
 - Impact mapping: vulnerability → affected devices → sites
 - End-of-life and end-of-support tracking
 - Upgrade recommendations aligned with vendor guidance
+- **Security & compliance frameworks**: map inventory, configuration, and vulnerability posture to recognized frameworks (e.g. NIST CSF, ISO 27001 family, CIS Controls) for consistent audit language and gap visibility—not a certification substitute, but a single place to reason about control coverage
 - Compliance-ready views for audits and reporting
 
 Vulnerabilities are treated as operational risk, not isolated alerts.
@@ -174,8 +181,9 @@ This enables engineering, security, and finance teams to reason over the same so
 - Multi-vendor inventory and classification
 - Site-based topology organization
 - Firmware lifecycle and compliance tracking
+- **Upgrades**: target-version planning, scheduling, batched or staged rollouts, and post-upgrade validation hooks
 - Vulnerability correlation (CVE → device impact)
-- Automated configuration backups
+- **Backups**: automated configuration backups, retention policies, on-demand exports, and pre-change snapshots for safer rollbacks
 - SSH / API-based data collection with vendor parsers
 - **Automatic tunnel creation** to reach devices and agents where direct routing is not available
 - **Inline AI** alongside upgrade and maintenance tasks for guided, auditable changes
