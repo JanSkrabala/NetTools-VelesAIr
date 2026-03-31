@@ -161,6 +161,8 @@ Vulnerabilities are treated as operational risk, not isolated alerts.
 
 ![End-of-Life & Compliance View](Compliance.png)
 
+![Security Frameworks Wiew](SecurityFrameworks.png)
+
 ### Financial & Lifecycle Controls
 
 NetTools-VelesAI connects technical network state with financial and lifecycle awareness.
