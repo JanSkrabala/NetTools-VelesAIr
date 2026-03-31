@@ -110,7 +110,7 @@ Key features:
 - **Automatic tunnel creation** where the control plane establishes required connectivity to agents and devices according to policy
 
 ![Unified Control Plane – Device Context](UCP.png)
-![Unified Control Plane – IPSec](IpSec.png)
+
 
 ### Visual Network Canvas
 
@@ -126,6 +126,7 @@ The canvas provides:
 The visual layer acts as a reasoning surface: changes, risks, and dependencies are visible before commands are executed.
 
 ![Visual Network Canvas – Device Context](VisualCanvas.png)
+![Unified Control Plane – IPSec](IpSec.png)
 
 ### VelesAI – AI Assistant
 
