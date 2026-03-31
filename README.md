@@ -140,6 +140,7 @@ Capabilities:
 - **Upgrade with AI inline**: firmware and lifecycle flows stay in-context—VelesAI explains options, surfaces risks, suggests validation steps, and answers questions without leaving the upgrade experience
 
 ![Veles – Device Context](Veles.png)
+![Veles – Upgrades](Upgrades.png)
 
 ### Vulnerabilities & Compliance
 
