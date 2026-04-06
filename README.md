@@ -219,7 +219,6 @@ This enables engineering, security, and finance teams to reason over the same so
 - Tailwind CSS
 - Radix UI
 - React Router
-- Axios
 - XTerm.js — interactive terminal
 - Chart.js — visual analytics
 
