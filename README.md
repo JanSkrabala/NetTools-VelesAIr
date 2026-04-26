@@ -163,7 +163,7 @@ Built for complex multi-site, multi-vendor environments where reliability, clari
 
 ## Status
 
-Actively developed MVP+ with working UI, backend, and AI integration. Designed for pilot deployments with enterprise and industrial partners.
+Actively developed MVP+ with working UI, backend, and AI integration.
 
 ## License
 
