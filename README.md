@@ -1,271 +1,170 @@
 # NetTools-VelesAI
 
-Enterprise-grade, vendor-agnostic network device management platform with AI-powered assistance and a unified control plane.
+Enterprise-grade, vendor-agnostic network management platform with AI assistance, visual topology, monitoring, backups, and unified control plane operations.
 
----
-
-## Table of contents.
+## Contents
 
 - [Overview](#overview)
-- [Architecture Overview](#architecture-overview)
+- [Architecture](#architecture)
 - [Core Capabilities](#core-capabilities)
-  - [Unified Control Plane (UCP)](#unified-control-plane-ucp)
-  - [Visual Network Canvas](#visual-network-canvas)
-  - [VelesAI – AI Assistant](#velesai--ai-assistant)
-  - [Vulnerabilities & Compliance](#vulnerabilities--compliance)
-  - [Financial & Lifecycle Controls](#financial--lifecycle-controls)
-  - [Device & Site Management](#device--site-management)
 - [Technology Stack](#technology-stack)
-  - [Backend](#backend)
-  - [Frontend](#frontend)
-  - [Infrastructure](#infrastructure)
-- [Security Architecture](#security-architecture)
+- [Security](#security)
 - [Observability](#observability)
-- [Roadmap](#roadmap-high-level)
-- [Project Status](#project-status)
+- [Roadmap](#roadmap)
+- [Status](#status)
 - [License](#license)
-
----
 
 ## Overview
 
-NetTools-VelesAI is an enterprise-grade, vendor-agnostic network management platform designed to replace text-heavy, CLI-driven workflows with a visual, AI-augmented operational model.
+NetTools-VelesAI replaces CLI-heavy network operations with visual, AI-assisted workflows.
 
-The platform unifies topology, configuration state, security posture, and financial impact into a single operational view so engineers and decision-makers can see the network rather than parsing text configurations.
+It combines topology, configuration state, monitoring, backups, vulnerabilities, lifecycle, compliance, and cost data into one operational view. Engineers can inspect devices, validate changes, plan upgrades, track risk, restore configurations, and use VelesAI for contextual guidance while keeping humans in control.
 
-NetTools-VelesAI combines:
+Built for complex multi-site, multi-vendor environments where reliability, clarity, security, and operational cost control matter.
 
-- a Unified Control Plane for managing multi-vendor network devices
-- **automatic tunnel creation** for secure connectivity to agents and remote devices without manual VPN or port-forward setup
-- a visual network canvas for topology, dependency, and change-impact analysis
-- AI-assisted reasoning for configuration, validation, and troubleshooting
-- **upgrade with AI inline**—context, checks, and guidance in the same flow as firmware and lifecycle changes
-- **firmware and software upgrades** with scheduling, rollout planning, and vendor-aligned target versions
-- **configuration backups**—automated capture, retention, and restore-oriented exports before and after material changes
-- vulnerability and lifecycle awareness (CVEs, firmware versions, end-of-life status)
-- **compliance and security frameworks**—structured views that map posture and controls to common enterprise frameworks for audits and gap analysis
-- financial and operational context (CSV-based cost, inventory, and compliance data)
+## Architecture
 
-The visual canvas is the primary interaction surface, linking devices, policies, VPNs, vulnerabilities, and costs into a coherent, continuously updated model. AI augments this model by providing context-aware explanations, risk assessment, and guided actions, while keeping humans firmly in control of every operational decision.
-
-NetTools-VelesAI is built for complex, multi-site, multi-vendor environments where reliability, clarity, security, and operational cost control are critical.
-
----
-
-## Architecture Overview
-
-NetTools-VelesAI follows a modern, layered architecture with a clear separation of concerns.
-
-Presentation layer
-
-- Web UI (React 19)
-- API clients (REST / WebSocket)
-
-Application layer
-
-- Frontend (Vite + React)
-- Backend (FastAPI)
-- WebSocket server
-
-Business logic layer
-
-- Unified Control Plane
-- Policy & config services
-- Upgrade and backup orchestration
-- AI tool orchestration
-
-Data layer
-
-- PostgreSQL
-- pgvector (RAG embeddings)
-- Encrypted credential storage
-
-Integration layer
-
-- VyOS agents (WebSocket)
-- Cisco devices (SSH)
-- Ollama (local LLM)
-- External APIs
-- **Automatic tunnel creation** for agent and operator paths (orchestrated secure tunnels without ad-hoc manual setup)
-
----
+- **Presentation:** React web UI, REST clients, WebSocket clients
+- **Application:** FastAPI backend, Vite frontend, WebSocket server
+- **Business logic:** Unified Control Plane, policy/config services, upgrade orchestration, backup orchestration, AI tool orchestration
+- **Data:** PostgreSQL, pgvector, encrypted credential storage, backup metadata
+- **Integrations:** VyOS agents, Cisco SSH, MikroTik API, external APIs, LLM providers, messaging channels, automatic secure tunnels
 
 ## Core Capabilities
 
-### Unified Control Plane (UCP)
+### Unified Control Plane
 
-A next-generation control plane for enterprise and industrial networks.
+- Multi-vendor support: VyOS, Cisco IOS/IOS-XE, Juniper, OPNsense, MikroTik
+- Configuration lifecycle: draft -> pending -> applied -> confirmed
+- Commit-confirm with automatic rollback
+- Firewall, VPN, service policy, and batch command management
+- Drift detection, health checks, firmware upgrades, and configuration backups
+- MikroTik RouterOS API integration
+- Automatic tunnel creation for agents and remote devices
 
-Key features:
-
-- Multi-vendor device support (VyOS, Cisco IOS / IOS-XE, Juniper, OPNsense)
-- Configuration lifecycle: draft → pending → applied → confirmed
-- Commit-confirm pattern with automatic rollback
-- Firewall, VPN, and service policy management
-- Configuration drift detection
-- Batch command execution and deployment optimization
-- Real-time monitoring and health checks
-- **Firmware and software upgrades**: plan targets, stage rollouts, track progress, and align with lifecycle policy
-- **Configuration backups**: scheduled snapshots, retention, and pre-change checkpoints tied to the configuration lifecycle
-- **Automatic tunnel creation** where the control plane establishes required connectivity to agents and devices according to policy
-
-![Unified Control Plane – Device Context](UCP.png)
-![Unified Control Plane – Commit Confirm](CommitConfirm.png)
-
+![Unified Control Plane - Device Context](UCP.png)
+![Unified Control Plane - Commit Confirm](CommitConfirm.png)
 
 ### Visual Network Canvas
 
-At the core of NetTools-VelesAI is a visual network canvas that enables engineers to see the network instead of parsing raw configuration text.
+- Live topology across sites, vendors, devices, links, zones, and dependencies
+- Context-aware actions: inspect, configure, validate, deploy
+- Real-time state: health, drift, VPN, lifecycle, vulnerability, and cost context
+- Change impact visible before commands execute
 
-The canvas provides:
+![Visual Network Canvas](VisualCanvas.png)
+![IPSec View](IpSec.png)
 
-- A live, interactive topology view across sites and vendors
-- Visual representation of devices, links, zones, and dependencies
-- Context-aware actions (inspect, configure, validate, deploy)
-- Real-time status indicators (health, drift, VPN state)
+### VelesAI Assistant
 
-The visual layer acts as a reasoning surface: changes, risks, and dependencies are visible before commands are executed.
-
-![Visual Network Canvas – Device Context](VisualCanvas.png)
-![Unified Control Plane – IPSec](IpSec.png)
-
-### VelesAI – AI Assistant
-
-An AI-powered assistant designed to support engineers, not replace them.
-
-Capabilities:
-
-- Retrieval-Augmented Generation (RAG) over device configurations
+- RAG over device configurations and operational data
 - Context-aware chat with persistent memory
-- Tool-based reasoning (inventory, analysis, config, knowledge)
-- Web search and vulnerability knowledge integration
-- Streaming responses and file-assisted analysis
-- **Upgrade with AI inline**: firmware and lifecycle flows stay in-context—VelesAI explains options, surfaces risks, suggests validation steps, and answers questions without leaving the upgrade experience
+- Tool-based reasoning for inventory, config, analysis, and knowledge
+- Web search, vulnerability context, streaming responses, and file-assisted analysis
+- Inline AI support for upgrades, maintenance, validation, and risk review
 
-![Veles – Device Context](Veles.png)
-![Veles – Upgrades](Upgrades.png)
+![VelesAI Device Context](Veles.png)
+![VelesAI Upgrades](Upgrades.png)
 
 ### Vulnerabilities & Compliance
 
-NetTools-VelesAI includes a dedicated vulnerability and lifecycle awareness layer.
-
-Features:
-
-- CVE ingestion and correlation (device, OS, firmware)
-- Impact mapping: vulnerability → affected devices → sites
-- End-of-life and end-of-support tracking
+- CVE ingestion and device correlation
+- Impact mapping by device, firmware, site, and lifecycle state
+- End-of-life and support tracking
 - Upgrade recommendations aligned with vendor guidance
-- **Security & compliance frameworks**: map inventory, configuration, and vulnerability posture to recognized frameworks (e.g. NIST CSF, ISO 27001 family, CIS Controls) for consistent audit language and gap visibility—not a certification substitute, but a single place to reason about control coverage
-- Compliance-ready views for audits and reporting
+- Compliance views mapped to frameworks such as NIST CSF, ISO 27001, and CIS Controls
 
-Vulnerabilities are treated as operational risk, not isolated alerts.
-
-![Vulnerabilities View](Vuln.png)
-
-![End-of-Life & Compliance View](Compliance.png)
-
-![Security Frameworks Wiew](SecurityFrameworks.png)
+![Vulnerabilities](Vuln.png)
+![Compliance](Compliance.png)
+![Security Frameworks](SecurityFrameworks.png)
 
 ### Financial & Lifecycle Controls
 
-NetTools-VelesAI connects technical network state with financial and lifecycle awareness.
-
-Capabilities:
-
-- Device-level CapEx and OpEx tracking
-- License and support contract visibility
-- Firmware lifecycle awareness (recommended, non-standard, end-of-life)
+- Device CapEx, OpEx, license, and support tracking
+- Firmware lifecycle awareness
 - CSV import/export for finance, inventory, and audits
-- Aggregated cost and risk views per site or region
+- Aggregated cost and risk views by site or region
 
-This enables engineering, security, and finance teams to reason over the same source of truth.
-
-![Finance – Finance context](Finnance.png)
+![Finance](Finnance.png)
 
 ### Device & Site Management
 
-- Multi-vendor inventory and classification
-- Site-based topology organization
-- Firmware lifecycle and compliance tracking
-- **Upgrades**: target-version planning, scheduling, batched or staged rollouts, and post-upgrade validation hooks
-- Vulnerability correlation (CVE → device impact)
-- **Backups**: automated configuration backups, retention policies, on-demand exports, and pre-change snapshots for safer rollbacks
-- SSH / API-based data collection with vendor parsers
-- **Automatic tunnel creation** to reach devices and agents where direct routing is not available
-- **Inline AI** alongside upgrade and maintenance tasks for guided, auditable changes
+- Multi-vendor inventory and site organization
+- Firmware planning, staged upgrades, and post-upgrade checks
+- Automated configuration backups, retention policies, exports, and pre-change snapshots
+- Backup history for restore, audit, and change comparison workflows
+- SSH/API collection with vendor parsers
+- MikroTik RouterOS API support
+- Inline AI guidance for auditable maintenance workflows
 
-![CSV Import & Export](CSV.png)
+![CSV Import and Export](CSV.png)
 
----
+### Monitoring
+
+- Device reachability, interface, VPN, service, agent, and tunnel health
+- Alerts for drift, failed checks, lifecycle risk, and connectivity loss
+- Historical health views by site, device, and critical path
+- Prometheus-compatible metrics and operational dashboards
+
+![Monitoring](monitor.png)
+![Global Monitoring](Gmonitor.png)
+
+### LLM Inference Providers
+
+- Ollama for local/private inference
+- OpenAI-compatible APIs for hosted or self-managed gateways
+- Azure OpenAI for enterprise cloud deployments
+- Anthropic Claude for advanced reasoning workflows
+- vLLM and llama.cpp-compatible local model servers
+- Provider selection by task, policy, latency, and data sensitivity
+
+![LLM Providers](LLMAPI.png)
+
+### Messaging Channels
+
+- Slack, Microsoft Teams, email, and webhook delivery
+- Routing by device health, tunnel state, compliance, vulnerability, lifecycle, or upgrade event
+- Human approval flows for high-risk actions
+- AI-generated summaries for incidents, maintenance windows, and upgrade plans
+- Audit-friendly links back to devices, sites, changes, and alerts
 
 ## Technology Stack
 
-### Backend
+- **Backend:** FastAPI, SQLModel/SQLAlchemy, PostgreSQL, pgvector, WebSockets, Paramiko/Netmiko, MikroTik API
+- **AI:** Ollama, OpenAI-compatible APIs, Azure OpenAI, Anthropic, vLLM, llama.cpp-compatible endpoints
+- **Frontend:** React 19, Vite, Tailwind CSS, Radix UI, React Router, XTerm.js, Chart.js
+- **Infrastructure:** Docker, Docker Compose, Nginx, GitHub Actions, Prometheus, Sentry
+- **Messaging:** Slack, Microsoft Teams, email, webhooks
 
-- FastAPI — async web framework
-- SQLModel / SQLAlchemy 2.0
-- PostgreSQL 16+
-- pgvector — semantic embeddings
-- Ollama — local LLM inference
-- Paramiko / Netmiko — device connectivity
-- WebSockets — real-time agent communication
-- Prometheus — metrics
-- Sentry — error tracking
+## Security
 
-### Frontend
-
-- React 19
-- Vite
-- Tailwind CSS
-- Radix UI
-- React Router
-- XTerm.js — interactive terminal
-- Chart.js — visual analytics
-
-### Infrastructure
-
-- Docker & Docker Compose
-- Nginx (production reverse proxy)
-- GitHub Actions (CI/CD)
-
----
-
-## Security Architecture
-
-- Encrypted credential storage (AES-256)
-- Role-based access control (RBAC)
-- SSH key and certificate-based device authentication
+- AES-256 encrypted credential storage
+- RBAC
+- SSH keys and certificate-based device authentication
 - Mutual TLS for agent communication
-- Full audit and communication logging
-- Secure defaults across the stack
-
----
+- Audit and communication logging
+- Secure defaults across platform services
 
 ## Observability
 
-- Structured JSON logging
-- Correlation IDs for request tracing
-- Prometheus metrics endpoint
-- Health checks for database, agents, and external services
+- Structured JSON logs
+- Correlation IDs
+- Prometheus metrics
+- Health checks for database, agents, tunnels, devices, and external services
 - Real-time device and VPN status monitoring
 
----
-
-## Roadmap (High Level)
+## Roadmap
 
 - Multi-region support
-- Predictive analytics and AI-assisted remediation
-- External REST API for third-party integrations
-- Advanced authentication (OAuth2, SAML, MFA)
+- Predictive analytics
+- AI-assisted remediation
+- External REST API
+- OAuth2, SAML, and MFA
 
----
+## Status
 
-## Project Status
-
-Actively developed — MVP+ with working UI, backend, and AI integration. Designed for pilot deployments with enterprise and industrial partners.
-
----
+Actively developed MVP+ with working UI, backend, and AI integration. Designed for pilot deployments with enterprise and industrial partners.
 
 ## License
 
-License will be defined prior to first public release / pilot agreement.
+License will be defined before first public release or pilot agreement.
